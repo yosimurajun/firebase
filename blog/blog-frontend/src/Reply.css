@@ -1,0 +1,18 @@
+.reply {
+  flex: 1;
+}
+.reply__content {
+  margin: 15px 0;
+  /* border: 1px solid gray; */
+  /* box-shadow: 2px 2px 8px 1px gray; */
+  padding-top: 14px;
+}
+.reply__content > h4 {
+  margin-bottom: -5px;
+}
+.reply__content span {
+  font-size: xx-small;
+}
+.reply__content p {
+  font-size: 14px;
+}

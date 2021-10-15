@@ -1,0 +1,11 @@
+.sidebar {
+  flex: 0.2;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid gray;
+}
+.sidebar > img {
+  width: 100%;
+  max-width: 100px;
+  margin: 40px 0;
+}

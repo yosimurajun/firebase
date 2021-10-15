@@ -1,0 +1,8 @@
+.item {
+  flex: 0.8;
+  padding: 40px;
+}
+
+.item__para {
+  margin: 20px 0;
+}
