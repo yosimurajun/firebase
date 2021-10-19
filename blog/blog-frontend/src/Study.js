@@ -15,7 +15,7 @@ function Study() {
         setData(response.data.filter((blog) => blog.type === "12"))
       )
       .catch((err) => console.log(err));
-  }, [data]);
+  }, []);
 
   return (
     <div className="content study">

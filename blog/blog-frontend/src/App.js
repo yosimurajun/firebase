@@ -12,7 +12,6 @@ import Study from "./Study";
 
 function App() {
   const [signIn, setSiginIn] = useState(false);
-
   const [signUser, setSignUser] = useState({});
 
   useEffect(() => {

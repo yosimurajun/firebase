@@ -23,7 +23,7 @@ function Item() {
       .get("/blog/" + id)
       .then((response) => setData(response.data))
       .catch((err) => console.log(err));
-  }, [id]);
+  }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -47,6 +47,10 @@ function Item() {
       .catch((err) => console.log(err));
   };
 
+  const handleData = (e) => {
+    setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
   return (
     <div className="item">
       {modify ? (
@@ -66,10 +70,9 @@ function Item() {
           <label for="type">type</label>
           <select
             id="type"
+            name="type"
             defaultValue={data.type}
-            onChange={(e) =>
-              setData((prev) => ({ ...prev, type: e.target.value }))
-            }
+            onChange={handleData}
           >
             <option>select category</option>
             <option value="12">study</option>
@@ -80,31 +83,28 @@ function Item() {
           <input
             type="text"
             id="title"
+            name="title"
             defaultValue={data.title}
-            onChange={(e) =>
-              setData((prev) => ({ ...prev, title: e.target.value }))
-            }
+            onChange={handleData}
           />
           <label for="content">content</label>
           <textarea
             id="content"
+            name="content"
             defaultValue={data.content}
-            onChange={(e) =>
-              setData((prev) => ({ ...prev, content: e.target.value }))
-            }
+            onChange={handleData}
           />
 
           <button type="submit">update</button>
         </form>
       ) : (
         <div className="item__content">
-          <h1 className="item__title">{data.title}</h1>
-          <span>{data.date}</span>
+          <h1 className="item__title">
+            {data.title}
+            <span>{data.date?.split("T")[0].replaceAll("-", ".")}</span>
+          </h1>
+
           <div className="item__para">
-            <img
-              src="https://www.imgworlds.com/wp-content/uploads/2016/12/to-post.jpg"
-              alt=""
-            />
             <p>{data.content}</p>
           </div>
         </div>

@@ -3,6 +3,22 @@
   padding: 40px;
 }
 
+.item__title {
+  position: relative;
+  border-bottom: 2px solid dodgerblue;
+  color: dodgerblue;
+}
+
 .item__para {
   margin: 20px 0;
+  min-height: 200px;
+  border-bottom: 2px solid dodgerblue;
+}
+
+.item__content span {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  font-size: 14px;
+  font-weight: 400;
 }

@@ -15,7 +15,7 @@ function Business() {
         setData(response.data.filter((blog) => blog.type === "34"))
       )
       .catch((err) => console.log(err));
-  }, [data]);
+  }, []);
 
   return (
     <div className="content business">
