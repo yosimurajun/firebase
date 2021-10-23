@@ -219,5 +219,18 @@ app.post("/reply/write", (req, res) => {
   });
 });
 
+app.get("/reply/delete/:id", (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+
+  Reply.findByIdAndDelete({ _id: id }, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send("delete");
+    }
+  });
+});
+
 // listner
 app.listen(PORT, () => console.log(`server is running on ${PORT} port`));

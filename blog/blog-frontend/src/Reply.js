@@ -57,14 +57,16 @@ function Reply({ id, user }) {
       <h2>reply</h2>
       {user && (
         <form onSubmit={onSubmit}>
-          <p id="reply_content">{user}</p>
+          <p className="replyer">{user}</p>
           <textarea
             type="text"
-            id="reply_content"
+            className="reply__text"
             value={replyText}
             onChange={(e) => setReplyText(e.target.value)}
           />
-          <button type="submit">write</button>
+          <button className="btn btn__write" type="submit">
+            write
+          </button>
         </form>
       )}
 
@@ -72,9 +74,16 @@ function Reply({ id, user }) {
         <div key={reply._id} className="reply__content">
           <h4>{reply.replyer}</h4>
           <span>{reply.date.split("T")[0]}</span>
-          <p>{reply.content}</p>
+          {reply.content.split("\n").map((line) => (
+            <p>{line}</p>
+          ))}
           {user?.type === "master" && (
-            <button onClick={() => deleteReply(reply._id)}>delete</button>
+            <button
+              className="btn btn__delete"
+              onClick={() => deleteReply(reply._id)}
+            >
+              delete
+            </button>
           )}
         </div>
       ))}

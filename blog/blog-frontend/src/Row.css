@@ -3,9 +3,24 @@
   margin-bottom: 20px;
   padding-bottom: 5px;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  align-items: center;
   font-size: 10px;
 }
 .row > span {
+  font-size: 14px;
+  color: #000000;
+}
+
+.row__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* border: 1px solid red; */
+  flex: 1;
+  margin-left: 10px;
+}
+
+.row__item > span {
   font-size: 14px;
 }

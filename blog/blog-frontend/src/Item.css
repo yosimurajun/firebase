@@ -4,8 +4,6 @@
 }
 
 .item__title {
-  position: relative;
-  border-bottom: 2px solid dodgerblue;
   color: dodgerblue;
 }
 
@@ -14,11 +12,42 @@
   min-height: 200px;
   border-bottom: 2px solid dodgerblue;
 }
+.item__type {
+  font-size: 14px;
+  color: red;
+}
 
-.item__content span {
-  position: absolute;
+.item__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  border-bottom: 2px solid dodgerblue;
+}
+
+.item__header span {
   right: 10px;
   bottom: 5px;
   font-size: 14px;
   font-weight: 400;
+}
+.btn {
+  padding: 4px 8px;
+  margin-right: 10px;
+}
+.btn__write {
+  border: none;
+  background-color: dodgerblue;
+  color: #fff;
+}
+.btn__modify {
+  border: none;
+  background-color: green;
+  color: #fff;
+}
+.btn__delete,
+.btn__cancle {
+  border: none;
+  background-color: red;
+  color: #fff;
 }

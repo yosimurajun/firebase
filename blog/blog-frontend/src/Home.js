@@ -38,7 +38,11 @@ function Home() {
         ? "loading..."
         : currentPosts(sort__data).map((item) => (
             <Link key={item._id} to={"/item/" + item._id}>
-              <Row title={item.title} date={item.date.split("T")[0]} />
+              <Row
+                type={item.type}
+                title={item.title}
+                date={item.date.split("T")[0]}
+              />
             </Link>
           ))}
 

@@ -7,6 +7,19 @@
   /* box-shadow: 2px 2px 8px 1px gray; */
   padding-top: 14px;
 }
+.replyer {
+  margin: 10px 0 5px;
+  text-transform: capitalize;
+}
+.reply__text {
+  width: 100%;
+  height: 80px;
+  resize: none;
+  outline: none;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  white-space: pre-line;
+}
 .reply__content > h4 {
   margin-bottom: -5px;
 }

@@ -37,6 +37,8 @@ function Item() {
       .catch((err) => console.log(err));
   };
 
+  const onUpdate = () => setModify(!modify);
+
   const onDelete = () => {
     _axios
       .get("/blog/delete/" + id)
@@ -54,13 +56,19 @@ function Item() {
   return (
     <div className="item">
       {modify ? (
-        <button onClick={() => setModify(!modify)}>cancle</button>
+        <button className="btn btn__cancle" onClick={onUpdate}>
+          cancle
+        </button>
       ) : (
         <>
           {signUser.type === "master" && (
             <>
-              <button onClick={() => setModify(!modify)}>modify</button>
-              <button onClick={onDelete}>delete</button>
+              <button className="btn btn__modify" onClick={onUpdate}>
+                modify
+              </button>
+              <button className="btn btn__delete" onClick={onDelete}>
+                delete
+              </button>
             </>
           )}
         </>
@@ -68,12 +76,7 @@ function Item() {
       {modify ? (
         <form onSubmit={onSubmit}>
           <label for="type">type</label>
-          <select
-            id="type"
-            name="type"
-            defaultValue={data.type}
-            onChange={handleData}
-          >
+          <select id="type" name="type" value={data.type} onChange={handleData}>
             <option>select category</option>
             <option value="12">study</option>
             <option value="34">business</option>
@@ -88,22 +91,23 @@ function Item() {
             onChange={handleData}
           />
           <label for="content">content</label>
-          <textarea
-            id="content"
-            name="content"
-            defaultValue={data.content}
-            onChange={handleData}
-          />
+          <textarea id="content" name="content" onChange={handleData}>
+            {data.content}
+          </textarea>
 
           <button type="submit">update</button>
         </form>
       ) : (
         <div className="item__content">
-          <h1 className="item__title">
-            {data.title}
+          {/* {data.type && (
+            <span className="item__type">
+              {data.type === "12" ? "study" : "business"}
+            </span>
+          )} */}
+          <div className="item__header">
+            <h1 className="item__title">{data.title}</h1>
             <span>{data.date?.split("T")[0].replaceAll("-", ".")}</span>
-          </h1>
-
+          </div>
           <div className="item__para">
             <p>{data.content}</p>
           </div>
