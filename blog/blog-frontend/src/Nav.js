@@ -6,19 +6,19 @@ import { LoginContext } from "./auth-context";
 function Nav() {
   const [active, setActive] = useState(false);
 
-  const { signUser, signIn, setSiginIn } = useContext(LoginContext);
+  const { signUser, setSignUser } = useContext(LoginContext);
 
   const logout = () => {
-    localStorage.removeItem("user");
-    // setUser("");
-    setSiginIn(false);
+    localStorage.setItem("token", "");
+    setSignUser({
+      ...signUser,
+      user: undefined,
+    });
   };
 
   return (
     <div className="nav">
-      <p className="user_info">
-        {signIn && signUser.type + " " + signUser.userid}
-      </p>
+      <p className="user_info">{signUser.user && `log in ${signUser.user}`}</p>
       <Link to="/">Home</Link>
       <button
         onClick={() => setActive(!active)}
@@ -35,8 +35,10 @@ function Nav() {
         <Link to="/study">Study</Link>
       </div>
       <Link to="/etc">etc</Link>
-      {signIn ? (
-        <button onClick={logout}>Logout</button>
+      {signUser.user ? (
+        <Link to="/login">
+          <button onClick={logout}>Logout</button>
+        </Link>
       ) : (
         <Link to="/login">Login</Link>
       )}

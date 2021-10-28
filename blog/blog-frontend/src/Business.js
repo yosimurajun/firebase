@@ -19,7 +19,7 @@ function Business() {
 
   return (
     <div className="content business">
-      {signUser.type === "master" && <Link to="/blog/write">write</Link>}
+      {signUser.user.type === "master" && <Link to="/blog/write">write</Link>}
       {data
         .sort((a, b) => new Date(b.date) - new Date(a.date))
         .map((item) => (

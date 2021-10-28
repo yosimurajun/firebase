@@ -1,0 +1,36 @@
+.login {
+  flex: 0.8;
+  padding: 40px;
+}
+
+.login__form {
+  display: grid;
+  width: 300px;
+  margin: 150px auto;
+}
+
+input[type="text"] {
+  outline: none;
+  padding: 6px 14px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+input[type="text"]:required {
+  border: 1px solid red;
+}
+
+input[type="text"]:required:valid {
+  border: 1px solid green;
+}
+.btn__login {
+  border: none;
+  background-color: dodgerblue;
+  color: #fff;
+  padding: 4px 8px;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  padding: 6px 0;
+  border-radius: 5px;
+  text-transform: capitalize;
+}

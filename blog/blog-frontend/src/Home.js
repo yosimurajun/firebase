@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Home.css";
 import { Link } from "react-router-dom";
 import Row from "./Row";
 import { _axios } from "./axios";
 import Pagination from "./Pagination";
+import { LoginContext } from "./auth-context";
 
 function Home() {
   const [data, setData] = useState([]);
@@ -21,7 +22,6 @@ function Home() {
       })
       .catch((err) => console.log(err));
   }, []);
-
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;
   function currentPosts(post) {

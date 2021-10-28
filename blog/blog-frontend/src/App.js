@@ -1,31 +1,45 @@
 import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { LoginContext } from "./auth-context";
 import "./App.css";
 import Sidebar from "./Sidebar";
 import Home from "./Home";
 import Business from "./Business";
 import Item from "./Item";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "./Login";
-import { LoginContext } from "./auth-context";
 import BlogForm from "./BlogForm";
 import Study from "./Study";
+import { _axios } from "./axios";
 
 function App() {
-  const [signIn, setSiginIn] = useState(false);
-  const [signUser, setSignUser] = useState({});
+  const [signUser, setSignUser] = useState({
+    accessToken: undefined,
+    refreshToken: undefined,
+    user: undefined,
+  });
 
   useEffect(() => {
-    const signin_user = JSON.parse(localStorage.getItem("user"));
-    if (signin_user) {
-      setSignUser(signin_user);
-      setSiginIn(true);
+    const token = localStorage.getItem("token");
+    if (token) {
+      _axios
+        .post("/user/token", { token: token })
+        .then((response) => {
+          setSignUser({
+            accessToken: token,
+            user: {
+              type: response.type,
+              userid: response.userid,
+            },
+          });
+        })
+        .catch((err) => console.log(err));
     }
   }, []);
-
+  console.log(signUser);
   return (
-    <Router>
-      <div className="app">
-        <LoginContext.Provider value={{ signUser, signIn, setSiginIn }}>
+    <LoginContext.Provider value={{ signUser, setSignUser }}>
+      <Router>
+        <div className="app">
           <Sidebar />
           <Switch>
             <Route exact path="/" component={Home} />
@@ -33,12 +47,12 @@ function App() {
             <Route exact path="/study" component={Study} />
             <Route exact path="/item/:id" component={Item} />
             <Route exact path="/etc" component={Home} />
-            <Route exact path="/login" component={signIn ? Home : Login} />
+            <Route exact path="/login" component={Login} />
             <Route exact path="/blog/write" component={BlogForm} />
           </Switch>
-        </LoginContext.Provider>
-      </div>
-    </Router>
+        </div>
+      </Router>
+    </LoginContext.Provider>
   );
 }
 

@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -6,11 +7,13 @@ import Reply from "./reply.js";
 import User from "./user.js";
 
 import validation from "./validation.js";
+import jwt from "jsonwebtoken";
 
 // app config
 
 const app = express();
 const PORT = process.env.PORT || 9000;
+dotenv.config();
 
 // google auth
 
@@ -54,38 +57,50 @@ app.get("/user/getall", (req, res) => {
   });
 });
 
-app.post("/user/signin", (req, res) => {
-  const user__data = req.body;
-  // console.log(user__data);
-  const validation_result = validation(user__data);
-  if (validation_result.error) {
-    res.status(500).send(validation_result.message);
-    return;
-  }
+let refreshTokens = [];
 
-  User.findOne({ userid: user__data.userid }, (err, data) => {
+app.post("/user/signin", (req, res) => {
+  const { userid, password } = req.body;
+
+  User.findOne({ userid }, (err, data) => {
     if (err) {
       res.status(500).send("user not found");
+    }
+
+    if (data.password === password) {
+      const accessToken = jwt.sign(
+        { userid, password },
+        process.env.ACCESS_TOKEN_SECRET
+      );
+      const refreshToken = jwt.sign(
+        { userid, password },
+        process.env.REFRESH_TOKEN_SECRET
+      );
+      refreshTokens.push(refreshToken);
+
+      res.status(200).json({ accessToken, refreshToken });
     } else {
-      //   console.log(typeof data.password, typeof password);
-      if (data.password === user__data.password) {
-        res.status(200).send(data);
-      } else {
-        res.status(500).send("password not same");
-      }
+      res.status(500).json({ message: "password not same" });
     }
   });
+});
+
+app.post("/user/token", (req, res) => {
+  const { token } = req.body;
+  jwt.verify(
+    JSON.parse(token),
+    process.env.ACCESS_TOKEN_SECRET,
+    (err, user) => {
+      if (err) return res.status(403);
+      // console.log("user", user);
+      res.json({ userid: user.userid, userType: user.type });
+    }
+  );
 });
 
 app.post("/user/signup", (req, res) => {
   const { userid, password } = req.body;
   const [id, code] = userid.split("#");
-  const validation_result = validation({ userid, password });
-
-  if (validation_result.error) {
-    res.status(500).send(validation_result.message);
-    return;
-  }
 
   if (code === "a1b2c3") {
     User.create({ type: "master", userid: id, password }, (err, data) => {
@@ -231,6 +246,18 @@ app.get("/reply/delete/:id", (req, res) => {
     }
   });
 });
+
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader.split(" ")[1];
+  if (token === null) return res.sendStatus(401);
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403);
+    res.user = user;
+    next();
+  });
+}
 
 // listner
 app.listen(PORT, () => console.log(`server is running on ${PORT} port`));
