@@ -1,14 +1,18 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const blogSchema = mongoose.Schema({
+  type: String,
+  title: String,
+  content: Array,
+  writer: String,
+  photo: {
     type: String,
-    title: String,
-    content: String,
-    writer: String,
-    date: {
-        type: Date, 
-        default: Date.now
-    }
-})
+    require: false,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
-export default mongoose.model('blog', blogSchema);
+export default mongoose.model("blog", blogSchema);

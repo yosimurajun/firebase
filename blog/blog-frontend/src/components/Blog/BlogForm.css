@@ -1,0 +1,56 @@
+.blog__form {
+  flex: 0.8;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog__form form {
+  width: 1fr;
+  display: flex;
+  flex-direction: column;
+  text-transform: capitalize;
+}
+
+.blog__form input,
+.blog__form select,
+.blog__form textarea {
+  border: 1px solid black;
+  border-radius: 0;
+  padding: 5px 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.content__preview {
+  border: 1px solid red;
+}
+.content__textarea {
+  border: 1px solid red;
+  /* resize: none; */
+  outline: none;
+  white-space: pre-line;
+}
+
+.blog__form .content {
+  min-height: 300px;
+  max-height: 300px;
+  resize: none;
+  outline: none;
+  white-space: pre-line;
+}
+
+.btns {
+  /* border: 1px solid red; */
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.btns > button {
+  padding: 4px 8px;
+}
+
+.write__img {
+  max-height: 400px;
+}

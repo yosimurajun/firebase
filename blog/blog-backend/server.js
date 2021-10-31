@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
+import multer from "multer";
+import path from "path";
 import cors from "cors";
 import Blog from "./blog.js";
 import Reply from "./reply.js";
@@ -15,16 +17,38 @@ const app = express();
 const PORT = process.env.PORT || 9000;
 dotenv.config();
 
-// google auth
+const __dirname = path.resolve();
 
 // db config
-const URL = `mongodb+srv://admin:tuzUfVHxaBWmptDY@cluster0.7xk0i.mongodb.net/blog?retryWrites=true&w=majority`;
+const DBURL = `mongodb+srv://admin:tuzUfVHxaBWmptDY@cluster0.7xk0i.mongodb.net/blog?retryWrites=true&w=majority`;
 
-mongoose.connect(URL).then(() => console.log("DB connected"));
+mongoose.connect(DBURL).then(() => console.log("DB connected"));
 
 // middleware
 app.use(express.json());
 app.use(cors());
+app.use("/images", express.static(path.join(__dirname, "/images")));
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "images/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
+});
+
+const upload = multer({ storage: storage });
+app.post("/upload", upload.single("file"), (req, res) => {
+  console.log("upload requst");
+  res.status(200).json("file has benn uploaded");
+});
+
+// app.post("/upload", upload.array("files"), (req, res) => {
+//   console.log("upload requst");
+//   console.log(req.files);
+//   res.status(200).json("file has benn uploaded");
+// });
 
 // route
 app.get("/", (req, res) => res.status(200).send("Hello Server Master"));
@@ -57,8 +81,6 @@ app.get("/user/getall", (req, res) => {
   });
 });
 
-let refreshTokens = [];
-
 app.post("/user/signin", (req, res) => {
   const { userid, password } = req.body;
 
@@ -69,16 +91,11 @@ app.post("/user/signin", (req, res) => {
 
     if (data.password === password) {
       const accessToken = jwt.sign(
-        { userid, password },
+        { type: data.type, userid: data.userid },
         process.env.ACCESS_TOKEN_SECRET
       );
-      const refreshToken = jwt.sign(
-        { userid, password },
-        process.env.REFRESH_TOKEN_SECRET
-      );
-      refreshTokens.push(refreshToken);
 
-      res.status(200).json({ accessToken, refreshToken });
+      res.status(200).json({ accessToken });
     } else {
       res.status(500).json({ message: "password not same" });
     }
@@ -92,7 +109,6 @@ app.post("/user/token", (req, res) => {
     process.env.ACCESS_TOKEN_SECRET,
     (err, user) => {
       if (err) return res.status(403);
-      // console.log("user", user);
       res.json({ userid: user.userid, userType: user.type });
     }
   );

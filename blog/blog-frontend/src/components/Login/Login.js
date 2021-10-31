@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
-import { _axios } from "./axios";
-import { LoginContext } from "./auth-context";
+import { _axios } from "../../axios";
+import { LoginContext } from "../../auth-context";
 import "./Login.css";
 
 function Login() {

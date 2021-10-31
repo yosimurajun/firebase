@@ -21,3 +21,10 @@ Content-Type: application/json
     "userid": "helen",
     "password": "4321"
 }
+
+###
+POST http://localhost:9000/upload HTTP/1.1
+
+
+###
+

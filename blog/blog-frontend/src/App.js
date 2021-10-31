@@ -2,19 +2,18 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { LoginContext } from "./auth-context";
 import "./App.css";
-import Sidebar from "./Sidebar";
-import Home from "./Home";
-import Business from "./Business";
-import Item from "./Item";
-import Login from "./Login";
-import BlogForm from "./BlogForm";
-import Study from "./Study";
+import Sidebar from "./components/Sidebar/Sidebar";
+import Home from "./components/Home/Home";
+import Business from "./components/Content/Business";
+import Item from "./components/Item/Item";
+import Login from "./components/Login/Login";
+import BlogForm from "./components/Blog/BlogForm";
+import Study from "./components/Content/Study";
 import { _axios } from "./axios";
 
 function App() {
   const [signUser, setSignUser] = useState({
     accessToken: undefined,
-    refreshToken: undefined,
     user: undefined,
   });
 
@@ -27,15 +26,15 @@ function App() {
           setSignUser({
             accessToken: token,
             user: {
-              type: response.type,
-              userid: response.userid,
+              type: response.data.userType,
+              userid: response.data.userid,
             },
           });
         })
         .catch((err) => console.log(err));
     }
   }, []);
-  console.log(signUser);
+
   return (
     <LoginContext.Provider value={{ signUser, setSignUser }}>
       <Router>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import "./Item.css";
-import Reply from "./Reply";
-import { _axios } from "./axios";
+import Reply from "../Reply/Reply";
+import { _axios } from "../../axios";
 import { useHistory } from "react-router-dom";
-import { LoginContext } from "./auth-context";
+import { LoginContext } from "../../auth-context";
 
 function Item() {
   const { id } = useParams();
@@ -12,11 +12,9 @@ function Item() {
   const history = useHistory();
   const { signUser } = useContext(LoginContext);
 
-  const [data, setData] = useState({
-    type: "",
-    title: "",
-    content: "",
-  });
+  const [data, setData] = useState({});
+
+  const PF = "http://localhost:9000/images/";
 
   useEffect(() => {
     _axios
@@ -27,7 +25,7 @@ function Item() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(data);
+
     _axios
       .post("/blog/update", { id, ...data })
       .then((response) => {
@@ -52,7 +50,6 @@ function Item() {
   const handleData = (e) => {
     setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
   return (
     <div className="item">
       {modify ? (
@@ -61,7 +58,7 @@ function Item() {
         </button>
       ) : (
         <>
-          {signUser.type === "master" && (
+          {signUser.user?.type === "master" && (
             <>
               <button className="btn btn__modify" onClick={onUpdate}>
                 modify
@@ -87,7 +84,7 @@ function Item() {
             type="text"
             id="title"
             name="title"
-            defaultValue={data.title}
+            value={data.title}
             onChange={handleData}
           />
           <label for="content">content</label>
@@ -99,22 +96,24 @@ function Item() {
         </form>
       ) : (
         <div className="item__content">
-          {/* {data.type && (
-            <span className="item__type">
-              {data.type === "12" ? "study" : "business"}
-            </span>
-          )} */}
-          <div className="item__header">
-            <h1 className="item__title">{data.title}</h1>
-            <span>{data.date?.split("T")[0].replaceAll("-", ".")}</span>
-          </div>
-          <div className="item__para">
-            <p>{data.content}</p>
-          </div>
+          <h1 className="item__header">{data.title}</h1>
+
+          <p>{data.writer}</p>
+          <span>{data.date?.split("T")[0].replaceAll("-", ".")}</span>
+          <img className="item__banner" src={PF + data.photo} alt="" />
+          <p>{data.content}</p>
+          {/* <div className="item__para"> */}
+          {/* {data.content?.map((val) => (
+              <>
+                <img className="" src={PF + val.photo} alt="" />
+                {val.content && <p>{val.content}</p>}
+              </>
+            ))} */}
+          {/* </div> */}
         </div>
       )}
-
-      <Reply id={id} user={signUser.userid} />
+      {/* user={signUser.user} */}
+      <Reply id={id} />
     </div>
   );
 }

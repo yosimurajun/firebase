@@ -3,8 +3,18 @@
   padding: 40px;
 }
 
+.item__header {
+  display: flex;
+  flex: 1;
+  margin: 15px 0 8px;
+}
+
+.item__banner {
+  width: 100%;
+}
+
 .item__title {
-  color: dodgerblue;
+  color: #000;
 }
 
 .item__para {
@@ -15,14 +25,6 @@
 .item__type {
   font-size: 14px;
   color: red;
-}
-
-.item__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex: 1;
-  border-bottom: 2px solid dodgerblue;
 }
 
 .item__header span {

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Nav.css";
-import { LoginContext } from "./auth-context";
+import { LoginContext } from "../../auth-context";
 
 function Nav() {
   const [active, setActive] = useState(false);
@@ -18,7 +18,10 @@ function Nav() {
 
   return (
     <div className="nav">
-      <p className="user_info">{signUser.user && `log in ${signUser.user}`}</p>
+      <p className="user_info">
+        {signUser.user &&
+          `log in ${signUser.user.type} ${signUser.user.userid}`}
+      </p>
       <Link to="/">Home</Link>
       <button
         onClick={() => setActive(!active)}

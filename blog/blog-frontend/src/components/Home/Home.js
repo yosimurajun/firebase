@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./Home.css";
 import { Link } from "react-router-dom";
-import Row from "./Row";
-import { _axios } from "./axios";
-import Pagination from "./Pagination";
-import { LoginContext } from "./auth-context";
+import Row from "../../Row";
+import { _axios } from "../../axios";
+import Pagination from "../../Pagination";
+import { LoginContext } from "../../auth-context";
 
 function Home() {
   const [data, setData] = useState([]);
