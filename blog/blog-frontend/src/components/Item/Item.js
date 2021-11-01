@@ -11,7 +11,6 @@ function Item() {
   const [modify, setModify] = useState(false);
   const history = useHistory();
   const { signUser } = useContext(LoginContext);
-
   const [data, setData] = useState({});
 
   const PF = "http://localhost:9000/images/";
@@ -21,7 +20,7 @@ function Item() {
       .get("/blog/" + id)
       .then((response) => setData(response.data))
       .catch((err) => console.log(err));
-  }, []);
+  }, [id]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -112,8 +111,8 @@ function Item() {
           {/* </div> */}
         </div>
       )}
-      {/* user={signUser.user} */}
-      <Reply id={id} />
+      {/*  */}
+      <Reply id={id} user={signUser.user} />
     </div>
   );
 }
