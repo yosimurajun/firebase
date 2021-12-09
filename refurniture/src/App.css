@@ -1,0 +1,71 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  margin: 40px;
+}
+
+/* ####################################################################*/
+
+/* position center */
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*  color */
+.color-white {
+  color: white;
+}
+.color-blue {
+  color: dodgerblue;
+}
+.color-black {
+  color: black;
+}
+.color-active {
+  color: dodgerblue;
+}
+
+.color-background {
+  background-color: dodgerblue;
+}
+
+/* font(size, bold) */
+.font-smallerSize {
+  font-size: 14px;
+}
+.font-smallSize {
+  font-size: 16px;
+}
+.font-midSize {
+  font-size: 18px;
+}
+.font-bold {
+  font-weight: bold;
+}
+
+/* link style initial set */
+a {
+  text-decoration: none;
+  color: black;
+  margin-left: 14px;
+}
+
+/* buttons */
+
+.button-blue {
+  color: white;
+  background-color: dodgerblue;
+  border: none;
+  border-radius: 8px;
+  padding: 4px 10px;
+}
+
+/* ul list */
+ul {
+  list-style: none;
+}
