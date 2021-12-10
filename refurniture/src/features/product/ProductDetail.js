@@ -1,11 +1,13 @@
 import React from "react";
-export const ProductDetail = ({ product }) => {
-  const onClick = () => {};
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+
+export const ProductDetail = ({ product, onNumber, onCart }) => {
   return (
     <div className="productDetail">
       <div className="product_card">
         <div className="card_section card_header">
-          <img className="card_img" src="" alt="" />
+          <img className="card_img" src={product.thumnail} alt="" />
           <div className="detail_content">
             <h4>{product.title}</h4>
             <div className="content_texts font-smallerSize">
@@ -23,22 +25,38 @@ export const ProductDetail = ({ product }) => {
           </div>
         </div>
         <div className="card_section card_order">
-          <select>
-            <option value="">1</option>
-            <option value="">2</option>
-            <option value="">3</option>
+          <select onChange={onNumber}>
+            {Array.apply(null, { length: product.numbers }).map((e, i) => (
+              <option value={i + 1}>{i + 1}</option>
+            ))}
+            {/* <option value="">1</option>
+              <option value="">2</option>
+              <option value="">3</option> */}
           </select>
-          <button className="color-blue">Add to cart</button>
+          <button className="color-blue" onClick={onCart}>
+            Add to cart
+          </button>
         </div>
         <div className="card_section card_gallery">
-          {product.images.map((image) => (
-            <div>
-              <img className="gallery_img" src={image} alt={product.title} />
-            </div>
-          ))}
+          <Carousel>
+            {product.images.map((image, index) => (
+              <div>
+                <img
+                  key={index}
+                  className="gallery_img"
+                  src={image}
+                  alt={product.title}
+                />
+              </div>
+            ))}
+          </Carousel>
 
-          <span className="prev">L</span>
-          <span className="next">R</span>
+          {/* <span className="prev" onClick={onLeftSlide}>
+            L
+          </span>
+          <span className="next" onClick={onRightSlide}>
+            R
+          </span> */}
         </div>
       </div>
     </div>

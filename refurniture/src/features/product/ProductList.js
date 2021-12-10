@@ -10,6 +10,9 @@ const fakeData = [
     price: "12.00",
     size: "three",
     color: "blue, red, green",
+    numbers: 4,
+    thumnail:
+      "https://images.unsplash.com/photo-1529113241001-b495badd8d44?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fHRhYmxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=700&q=60",
     images: [
       "https://images.unsplash.com/photo-1529113241001-b495badd8d44?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fHRhYmxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=700&q=60",
       "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHRhYmxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=700&q=60",
@@ -156,6 +159,7 @@ export const ProductList = () => {
   const [active, setActive] = useState("Table");
   const [modal, setModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState([]);
+  const [number, setNumber] = useState(0);
 
   const onClickActive = (e) => {
     setActive(e.target.innerText);
@@ -166,6 +170,21 @@ export const ProductList = () => {
     setSelectedItem(selectedProduct);
     setModal(true);
   };
+
+  const onNumber = (e) => {
+    setNumber(e.target.value);
+  };
+
+  const onCart = () => {
+    let products = [];
+
+    if (localStorage.getItem("products")) {
+      products = JSON.parse(localStorage.getItem("products"));
+    }
+    products.push({ productId: selectedItem.id, number });
+    localStorage.setItem("products", JSON.stringify(products));
+  };
+
   return (
     <section className="productList font-midSize">
       <div className="productList_hedaer">
@@ -182,7 +201,13 @@ export const ProductList = () => {
             ></div>
           ))}
       </div>
-      {modal && <ProductDetail product={selectedItem} />}
+      {modal && (
+        <ProductDetail
+          product={selectedItem}
+          onNumber={onNumber}
+          onCart={onCart}
+        />
+      )}
     </section>
   );
 };

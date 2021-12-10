@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Navbar.css";
 
 import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   const [active, setActive] = useState("Shop");
+  const [cartNumber, setCartNumber] = useState(0);
 
   const onClick = (e) => {
     setActive(e.target.innerText);
   };
+
+  useEffect(() => {
+    let products = [];
+
+    if (localStorage.getItem("products")) {
+      products = JSON.parse(localStorage.getItem("products"));
+    }
+    setCartNumber(products.length);
+  }, []);
 
   return (
     <nav>
@@ -50,7 +60,7 @@ export const Navbar = () => {
           }
           onClick={onClick}
         >
-          Cart
+          Cart({cartNumber})
         </Link>
         <Link to="/" className="color-blue">
           Login in
