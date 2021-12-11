@@ -50,13 +50,6 @@ export const ProductDetail = ({ product, onNumber, onCart }) => {
               </div>
             ))}
           </Carousel>
-
-          {/* <span className="prev" onClick={onLeftSlide}>
-            L
-          </span>
-          <span className="next" onClick={onRightSlide}>
-            R
-          </span> */}
         </div>
       </div>
     </div>

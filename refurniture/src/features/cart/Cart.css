@@ -1,0 +1,48 @@
+section {
+  margin-top: 80px;
+  padding: 0 80px;
+}
+
+.cart {
+  display: flex;
+  /* flex-direction: column; */
+  /* margin: 10px 0; */
+}
+.left {
+  flex: 0.6;
+  margin-right: 60px;
+}
+
+.items {
+  display: flex;
+  justify-content: space-between;
+  /* margin-bottom: 20px; */
+  margin: 10px 0 20px;
+}
+.thumnail {
+  flex: 0.3;
+  height: 130px;
+}
+.detail_content {
+  flex: 0.55;
+  height: 130px;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: space-between; */
+}
+.card_buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.right {
+  flex: 0.4;
+}
+.right_line {
+  margin: 20px 0;
+  border-top: 2px solid black;
+}
+
+.total_section {
+  display: flex;
+  justify-content: space-between;
+}

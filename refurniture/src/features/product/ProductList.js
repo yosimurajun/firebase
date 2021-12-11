@@ -181,7 +181,7 @@ export const ProductList = () => {
     if (localStorage.getItem("products")) {
       products = JSON.parse(localStorage.getItem("products"));
     }
-    products.push({ productId: selectedItem.id, number });
+    products.push({ product: selectedItem, number });
     localStorage.setItem("products", JSON.stringify(products));
   };
 
